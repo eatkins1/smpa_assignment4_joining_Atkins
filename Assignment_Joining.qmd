@@ -1,6 +1,6 @@
 ---
 title: "Joining Assignment"
-author: "Your Name Here"
+author: "Taylor Atkins"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 format:
   html:
@@ -41,8 +41,10 @@ Join together the election results and urban/suburban/rural tables above, and th
 
 ```{r}
 
-
-
+inner_join(counties_demographics, counties_rural_urban_suburban) %>% 
+  filter(state_code == "VA") %>% 
+  group_by(rural_urban) %>% 
+  summarize(average = mean(pct_r_2020))
 
 ```
 
@@ -56,8 +58,10 @@ Using the joined election results / urban/suburban/rural table created above:
 
 ```{r}
 
-
-
+inner_join(counties_elexresults, counties_rural_urban_suburban)%>%
+  filter(state_code == "VA")%>% 
+  group_by(rural_urban)%>%
+  count(winner_2020)
 
 ```
 
@@ -71,8 +75,10 @@ Join together the election results and demographics tables above, and then use t
 
 ```{r}
 
-
-
+inner_join(counties_demographics, counties_elexresults)%>%
+  filter(state_code == "FL")%>%
+  group_by(pct_ed_college_all_abovebelow_natl)%>%
+  summarize(averagevotes = mean(pct_r_2020))
 
 ```
 
@@ -86,8 +92,9 @@ Using the joined table you made above:
 
 ```{r}
 
-
-
+inner_join(counties_elexresults, counties_demographics) %>% 
+    group_by(pct_ed_college_all_abovebelow_natl) %>% 
+    summarize(average = mean(republican_2020))
 
 ```
 
@@ -97,8 +104,9 @@ Now using the joined datasets above, come up with two groupings you find interes
 
 ```{r}
 
-
-
+inner_join(counties_elexresults, counties_demographics) %>% 
+    group_by(pct_born_foreign_abovebelow_natl) %>% 
+    summarize(average = mean(republican_2020))
 
 ```
 
@@ -106,9 +114,9 @@ Now using the joined datasets above, come up with two groupings you find interes
 
 ```{r}
 
-
-
-
+inner_join(counties_demographics, counties_elexresults)%>%
+  group_by(pct_race_nonwhite)%>%
+  summarize(averagevotes = mean(pct_r_2020))
 
 ```
 
